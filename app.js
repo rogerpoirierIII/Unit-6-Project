@@ -1,17 +1,19 @@
 // Global Variables===============================================================
 const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
-const start = document.getElementsByClassName('btn__reset');
+const btn = document.getElementsByClassName('btn__reset');
 let missed = 0;
 const overlay = document.getElementById('overlay');
+let lives = document.getElementsByClassName('tries');
+//================================================================================
+
+// Functions======================================================================
+
 // Returns a random phrase from the phrases array
 function getRandomPhraseAsArray(){   
     let phraseNum = Math.floor(Math.random()*(phrases.length))
     return phraseNum;
 }
-//================================================================================
-
-// Functions======================================================================
 
 // Add the leteters of a string to the display
 function addPhraseToDisplay(){
@@ -25,7 +27,7 @@ function addPhraseToDisplay(){
     }else{
         letter.className = 'letter'
     }
-    phrase.appendChild(letter);
+    phrase.firstElementChild.appendChild(letter);
     }
 }
 // Check if a letter is in the phrase
@@ -50,19 +52,24 @@ function checkWin(){
         overlay.className = 'win';
         overlay.firstElementChild.innerHTML = 'You Win!';
         overlay.style.display = 'flex'
+        overlay.lastElementChild.innerHTML = 'Play Again?'
+        overlay.lastElementChild.className = 'reset btn__reset'
     }else if(missed >= 5){
         overlay.className = 'lose';
         overlay.firstElementChild.innerHTML = 'Better Luck Next Time!';
         overlay.style.display = 'flex';
-
-
+        overlay.lastElementChild.innerHTML = 'Play Again?';
+        overlay.lastElementChild.className = 'reset btn__reset';
     }
     
     }
+function restGame(){
+
+}
 // ===============================================================================
 
 // Listens for the start game button to be pressed to hide the overlay
-start[0].addEventListener('click', () => {
+btn[0].addEventListener('click', () => {
     overlay.style.display = 'none';
 });
 const phrases = ['the best of both worlds','let the cat out of the bag','to cost an arm and a leg','getting a taste of your own medicine','to hit the nail on the head'];
@@ -77,8 +84,9 @@ qwerty.addEventListener('click', (e) => {
         let guess = e.target.textContent
         let result = checkLetter(guess);
         if(result === null){
-            let lives = document.getElementsByClassName('tries');
-            lives.item(0).remove();
+
+            lives[missed].firstElementChild.src=
+            "file:///C:/Users/Trey/OneDrive/Documents/My%20Websites/Unit%206%20Project/images/lostHeart.png";
             missed++;
         }
 
@@ -87,3 +95,27 @@ qwerty.addEventListener('click', (e) => {
 
 }
 )
+
+btn[0].addEventListener('click',(e) =>{
+    if (e.target.textContent ==='Play Again?'){
+        const btns = document.querySelectorAll('button')
+        for(let i=0;i < btns.length; i++){
+        btns[i].className = '';
+    }
+        const list = phrase.firstElementChild;
+        while (list.firstChild) {
+            list.removeChild(list.firstChild);
+          }
+        getRandomPhraseAsArray();
+        addPhraseToDisplay();
+        missed = 0;
+        for(let i=0;i < lives.length; i++){
+            lives[i].firstElementChild.src="file:///C:/Users/Trey/OneDrive/Documents/My%20Websites/Unit%206%20Project/images/liveHeart.png";
+                }
+
+
+
+
+        }
+    }
+)   

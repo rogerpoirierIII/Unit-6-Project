@@ -92,6 +92,9 @@ button {
 }
 
 .show {
+  
+  transition-property: background-color,color;
+  transition-duration: 2s;
   color: #000;
   background-color: #76CE82;
 }
