@@ -3,6 +3,7 @@ const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
 const start = document.getElementsByClassName('btn__reset');
 let missed = 0;
+const overlay = document.getElementById('overlay');
 // Returns a random phrase from the phrases array
 function getRandomPhraseAsArray(){   
     let phraseNum = Math.floor(Math.random()*(phrases.length))
@@ -40,11 +41,28 @@ function checkLetter(button){
     }
     return match;
 }
+
+// Check if the game has been won or lost
+function checkWin(){
+    let remain = document.getElementsByClassName('letter');
+    let correct = document.getElementsByClassName('show');
+    if(remain.length === correct.length){
+        overlay.className = 'win';
+        overlay.firstElementChild.innerHTML = 'You Win!';
+        overlay.style.display = 'flex'
+    }else if(missed >= 5){
+        overlay.className = 'lose';
+        overlay.firstElementChild.innerHTML = 'Better Luck Next Time!';
+        overlay.style.display = 'flex';
+
+
+    }
+    
+    }
 // ===============================================================================
 
 // Listens for the start game button to be pressed to hide the overlay
 start[0].addEventListener('click', () => {
-    const overlay = document.getElementById('overlay');
     overlay.style.display = 'none';
 });
 const phrases = ['the best of both worlds','let the cat out of the bag','to cost an arm and a leg','getting a taste of your own medicine','to hit the nail on the head'];
@@ -55,7 +73,6 @@ addPhraseToDisplay();
 //Listens for QWERTY keyboard buttons to be pressed
 qwerty.addEventListener('click', (e) => {
     if(e.target.className !== 'chosen'&& e.target.className === ''){
-        console.log(e.target);
         e.target.className = 'chosen';
         let guess = e.target.textContent
         let result = checkLetter(guess);
@@ -66,7 +83,7 @@ qwerty.addEventListener('click', (e) => {
         }
 
     }
-})
+    checkWin();
 
-// Check if the game has been won or lost
-const checkWin = () =>{}
+}
+)
