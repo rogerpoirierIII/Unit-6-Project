@@ -2,12 +2,10 @@
 const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
 const start = document.getElementsByClassName('btn__reset');
-btn = document.getElementsByTagName('BUTTON')
 let missed = 0;
-
 // Returns a random phrase from the phrases array
 function getRandomPhraseAsArray(){   
-    let phraseNum = Math.floor(Math.random(phrases.length)*(phrases.length+1))
+    let phraseNum = Math.floor(Math.random()*(phrases.length))
     return phraseNum;
 }
 //================================================================================
@@ -16,11 +14,11 @@ function getRandomPhraseAsArray(){
 
 // Add the leteters of a string to the display
 function addPhraseToDisplay(){
-    let currentPhrase = phrases[getRandomPhraseAsArray(phrases)];
-    currentPhrase.split('');   
-    for(let i = 0;i < currentPhrase.length;i++){
+    const phraseArray = phrases[getRandomPhraseAsArray(phrases)];
+    phraseArray.split('');   
+    for(let i = 0;i < phraseArray.length;i++){
     const letter = document.createElement('li');
-    letter.textContent = currentPhrase[i];
+    letter.textContent = phraseArray[i];
     if(letter.textContent === " "){
         letter.className = 'space'
     }else{
@@ -35,11 +33,9 @@ function checkLetter(button){
     let match = null;
 
     for (let i=0; i < letter.length; i++){
-        let text = letter[i].textContent;
-        if(letter[i].innerHTML === btn.textContent){
-            letter[i].className='show';
+        if(letter[i].textContent === button){
+            letter[i].className = 'letter show';
             match = button.textContent;
-            letter[i].className = 'show';
         }
     }
     return match;
@@ -56,13 +52,16 @@ const phrases = ['the best of both worlds','let the cat out of the bag','to cost
 
 getRandomPhraseAsArray();
 addPhraseToDisplay();
-
+//Listens for QWERTY keyboard buttons to be pressed
 qwerty.addEventListener('click', (e) => {
-    if(e.target.className !== 'chosen'&& e.target.className !== 'keyrow'){
+    if(e.target.className !== 'chosen'&& e.target.className === ''){
+        console.log(e.target);
         e.target.className = 'chosen';
-        let guess =checkLetter();
-        if(guess === null){
-            document.querySelector('ol').removeChild;
+        let guess = e.target.textContent
+        let result = checkLetter(guess);
+        if(result === null){
+            let lives = document.getElementsByClassName('tries');
+            lives.item(0).remove();
             missed++;
         }
 
