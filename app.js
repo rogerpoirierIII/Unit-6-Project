@@ -63,7 +63,22 @@ function checkWin(){
     }
     
     }
-function restGame(){
+function resetGame(){
+    const btns = document.querySelectorAll('button')
+        for(let i=0;i < btns.length; i++){
+        btns[i].className = '';
+    }
+        const list = phrase.firstElementChild;
+        while (list.firstChild) {
+            list.removeChild(list.firstChild);
+          }
+        getRandomPhraseAsArray();
+        addPhraseToDisplay();
+        missed = 0;
+        for(let i=0;i < lives.length; i++){
+            lives[i].firstElementChild.src="file:///C:/Users/Trey/OneDrive/Documents/My%20Websites/Unit%206%20Project/images/liveHeart.png";
+                }
+
 
 }
 // ===============================================================================
@@ -98,23 +113,7 @@ qwerty.addEventListener('click', (e) => {
 
 btn[0].addEventListener('click',(e) =>{
     if (e.target.textContent ==='Play Again?'){
-        const btns = document.querySelectorAll('button')
-        for(let i=0;i < btns.length; i++){
-        btns[i].className = '';
-    }
-        const list = phrase.firstElementChild;
-        while (list.firstChild) {
-            list.removeChild(list.firstChild);
-          }
-        getRandomPhraseAsArray();
-        addPhraseToDisplay();
-        missed = 0;
-        for(let i=0;i < lives.length; i++){
-            lives[i].firstElementChild.src="file:///C:/Users/Trey/OneDrive/Documents/My%20Websites/Unit%206%20Project/images/liveHeart.png";
-                }
-
-
-
+        resetGame()
 
         }
     }
