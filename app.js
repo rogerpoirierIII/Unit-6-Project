@@ -76,7 +76,7 @@ function resetGame(){
         addPhraseToDisplay();
         missed = 0;
         for(let i=0;i < lives.length; i++){
-            lives[i].firstElementChild.src="file:///C:/Users/Trey/OneDrive/Documents/My%20Websites/Unit%206%20Project/images/liveHeart.png";
+            lives[i].firstElementChild.src="images/liveHeart.png";
                 }
 
 
@@ -101,7 +101,7 @@ qwerty.addEventListener('click', (e) => {
         if(result === null){
 
             lives[missed].firstElementChild.src=
-            "file:///C:/Users/Trey/OneDrive/Documents/My%20Websites/Unit%206%20Project/images/lostHeart.png";
+            "images/lostHeart.png";
             missed++;
         }
 
